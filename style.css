@@ -1,0 +1,320 @@
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1f2933;
+  --color-muted: #52606d;
+  --color-accent: #ff6b6b;
+  --color-accent-2: #2ec4b6;
+  --color-accent-3: #ffb703;
+  --color-accent-contrast: #ffffff;
+  --color-border: #e4e7eb;
+  --color-surface: #f5f7fa;
+  --max-width: 960px;
+
+  --hero-gradient: linear-gradient(135deg, #6a5af9 0%, #ff6b6b 55%, #ffb703 100%);
+  --section-ueber-mich: #fff5f0;
+  --section-hobbies: #f0fbf9;
+  --section-reisen: #f2f6ff;
+  --section-kontakt: #1f2933;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+
+.nav {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.nav__brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-decoration: none;
+  background: var(--hero-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.nav__links {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.nav__links a {
+  text-decoration: none;
+  color: var(--color-muted);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav__links a:hover {
+  color: var(--color-accent);
+  background: var(--color-surface);
+}
+
+.hero {
+  margin: 0;
+  padding: 6rem 1.5rem;
+  text-align: center;
+  background: var(--hero-gradient);
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: clamp(2.25rem, 6vw, 3.5rem);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
+.hero p {
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.section {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 4.5rem 1.5rem;
+}
+
+.section--alt {
+  max-width: none;
+}
+
+.section--alt > * {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#ueber-mich {
+  background: var(--section-ueber-mich);
+  max-width: none;
+}
+
+#ueber-mich > * {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#hobbies {
+  background: var(--section-hobbies);
+}
+
+.section h2 {
+  font-size: 1.9rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  position: relative;
+}
+
+.section h2::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  height: 0.3rem;
+  border-radius: 999px;
+  background: var(--hero-gradient);
+  margin-top: 0.5rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+  padding: 1.75rem;
+  box-shadow: 0 4px 16px rgba(31, 41, 51, 0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(31, 41, 51, 0.1);
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card__icon {
+  font-size: 1.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.card:nth-child(1) .card__icon { background: #ffe1e1; }
+.card:nth-child(2) .card__icon { background: #fff0cc; }
+.card:nth-child(3) .card__icon { background: #d9f7f2; }
+.card:nth-child(4) .card__icon { background: #e6e1ff; }
+
+.section__intro {
+  color: var(--color-muted);
+  margin-top: -0.5rem;
+}
+
+#reisen {
+  background: var(--section-reisen);
+  max-width: none;
+}
+
+#reisen > * {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.travel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.25rem;
+}
+
+.travel-card {
+  text-align: center;
+}
+
+.travel-card__photo {
+  aspect-ratio: 4 / 3;
+  border: 2px dashed #b8c2cc;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  background: #ffffff;
+  overflow: hidden;
+}
+
+.travel-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.travel-card__label {
+  margin: 0.6rem 0 0;
+  font-weight: 700;
+}
+
+.dream-heading {
+  margin-top: 3.5rem;
+}
+
+.travel-card--dream {
+  max-width: 280px;
+}
+
+.travel-card--dream .travel-card__photo {
+  border: 3px solid transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    var(--hero-gradient) border-box;
+  box-shadow: 0 8px 28px rgba(255, 183, 3, 0.25);
+}
+
+.travel-card--dream .travel-card__label {
+  font-size: 1.1rem;
+}
+
+#kontakt {
+  background: var(--section-kontakt);
+  color: #f3f4f6;
+  max-width: none;
+}
+
+#kontakt > * {
+  max-width: var(--max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#kontakt h2::after {
+  background: var(--hero-gradient);
+}
+
+#kontakt a {
+  color: var(--color-accent-3);
+  font-weight: 600;
+}
+
+.site-footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  background: var(--section-kontakt);
+  color: #9aa5b1;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #111827;
+    --color-text: #f3f4f6;
+    --color-muted: #9ca3af;
+    --color-border: #1f2933;
+    --color-surface: #1a2332;
+    --section-ueber-mich: #241d24;
+    --section-hobbies: #16241f;
+    --section-reisen: #131b2b;
+    --section-kontakt: #0b1220;
+  }
+
+  .site-header {
+    background: rgba(17, 24, 39, 0.85);
+  }
+
+  .travel-card__photo {
+    background: #1a2332;
+    border-color: #33404d;
+  }
+
+  .card:nth-child(1) .card__icon { background: #3a2323; }
+  .card:nth-child(2) .card__icon { background: #3a3220; }
+  .card:nth-child(3) .card__icon { background: #1c332f; }
+  .card:nth-child(4) .card__icon { background: #29233f; }
+}
