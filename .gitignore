@@ -9,6 +9,9 @@ dist
 # Node dependencies
 node_modules
 
+# Lokal hochgeladene Bilder (siehe UPLOADS_DIR)
+.data
+
 # Logs
 logs
 *.log

@@ -83,4 +83,7 @@ jobs:
               exit 1
             fi
 
+            echo "Uebernehme Basisinhalte (Profil/Hobbies/Reiseziele), falls noch leer..."
+            docker compose -f docker-compose.prod.yml run --rm --no-deps muenevver-app npm run db:seed
+
             docker image prune -f

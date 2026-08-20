@@ -7,6 +7,7 @@
         <a href="#hobbies">Hobbies</a>
         <a href="#reisen">Reisen</a>
         <a href="#kontakt">Kontakt</a>
+        <NuxtLink to="/login" class="nav__login" title="Anmelden">🔒</NuxtLink>
       </div>
     </nav>
   </header>
