@@ -63,7 +63,7 @@ jobs:
             set -e
             cd /opt/muenevver
             docker compose -f docker-compose.prod.yml pull
-            docker compose -f docker-compose.prod.yml up -d
+            docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
             echo "Warte auf MySQL und wende Migrationen an..."
             success=0
