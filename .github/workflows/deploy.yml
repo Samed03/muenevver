@@ -5,18 +5,79 @@ on:
     branches: [main]
 
 jobs:
+  vars:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.image.outputs.name }}
+    steps:
+      - name: Image-Name kleinschreiben (GHCR verlangt lowercase)
+        id: image
+        run: echo "name=ghcr.io/$(echo '${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+  build-and-push:
+    needs: vars
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bei GitHub Container Registry anmelden
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Image bauen und pushen
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ needs.vars.outputs.image }}:latest
+
   deploy:
+    needs: [vars, build-and-push]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Statische Dateien auf den Server kopieren
+      - name: Compose-Datei auf den Server kopieren
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "index.html,style.css,script.js"
-          target: "/opt/vue-playground/sites/muenevver"
+          source: "docker-compose.prod.yml"
+          target: "/opt/muenevver"
           strip_components: 0
-          overwrite: true
+
+      - name: Auf dem Server deployen
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            set -e
+            cd /opt/muenevver
+            docker compose -f docker-compose.prod.yml pull
+            docker compose -f docker-compose.prod.yml up -d
+
+            echo "Warte auf MySQL und wende Migrationen an..."
+            success=0
+            for i in $(seq 1 20); do
+              if docker compose -f docker-compose.prod.yml run --rm --no-deps app npm run db:migrate; then
+                success=1
+                break
+              fi
+              echo "Noch nicht bereit (MySQL-Erstinitialisierung), naechster Versuch in 3s... ($i/20)"
+              sleep 3
+            done
+            if [ "$success" -ne 1 ]; then
+              echo "Migration nach mehreren Versuchen fehlgeschlagen."
+              exit 1
+            fi
+
+            docker image prune -f

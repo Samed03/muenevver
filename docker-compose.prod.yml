@@ -1,0 +1,48 @@
+# Produktiv-Setup fuer den Server. Wird per SSH/GitHub Actions dort ausgefuehrt.
+# Voraussetzung: eine .env-Datei im selben Verzeichnis (siehe .env.production.example),
+# zusaetzlich IMAGE_NAME=ghcr.io/<github-user>/<repo>
+#
+# Das externe Netzwerk "caddy-shared" muss einmalig auf dem Server angelegt werden:
+#   docker network create caddy-shared
+# Caddy laeuft im vue-playground-Stack und haengt ebenfalls an diesem Netzwerk,
+# um "muenevver.samedarslan.de" per reverse_proxy an den Container "muenevver-app"
+# weiterzuleiten (siehe Caddyfile im vue-playground-Repo).
+
+services:
+  app:
+    image: ${IMAGE_NAME}:latest
+    container_name: muenevver-app
+    restart: unless-stopped
+    env_file: .env
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - default
+      - caddy-shared
+    expose:
+      - "3000"
+
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
+
+networks:
+  default:
+  caddy-shared:
+    external: true

@@ -1,25 +1,5 @@
-<!doctype html>
-<html lang="de">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Münevver Arslan</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <header class="site-header">
-    <nav class="nav">
-      <a href="#top" class="nav__brand">Münevver Arslan</a>
-      <div class="nav__links">
-        <a href="#ueber-mich">Über mich</a>
-        <a href="#hobbies">Hobbies</a>
-        <a href="#reisen">Reisen</a>
-        <a href="#kontakt">Kontakt</a>
-      </div>
-    </nav>
-  </header>
-
-  <main>
+<template>
+  <div>
     <section id="top" class="hero">
       <h1>Münevver Arslan</h1>
       <p>Master-Studentin der Soziologie an der Universität Bielefeld</p>
@@ -66,7 +46,7 @@
       <p class="section__intro">
         Ein paar Orte, an denen ich schon war
         <!-- Fotos ergaenzen: einfach den jeweiligen .travel-card__photo-Platzhalter
-             durch <img src="bilder/spanien.jpg" alt="Spanien"> ersetzen -->
+             durch <img :src="..." alt="..."> ersetzen -->
       </p>
       <div class="travel-grid">
         <article class="travel-card">
@@ -118,12 +98,5 @@
       <h2>Kontakt</h2>
       <p>Erreichbar unter: <a href="mailto:toktas-m@hotmail.de">toktas-m@hotmail.de</a></p>
     </section>
-  </main>
-
-  <footer class="site-footer">
-    <p>&copy; <span id="jahr"></span> Münevver Arslan</p>
-  </footer>
-
-  <script src="script.js"></script>
-</body>
-</html>
+  </div>
+</template>
