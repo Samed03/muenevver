@@ -9,7 +9,11 @@
 # weiterzuleiten (siehe Caddyfile im vue-playground-Repo).
 
 services:
-  app:
+  # Service-Name bewusst nicht "app" (wie im vue-playground-Repo), sonst
+  # registriert Docker auf dem gemeinsamen Netzwerk "caddy-shared" denselben
+  # Alias "app" fuer beide Container - Caddy koennte dann den falschen
+  # erreichen (genau das ist uns beim ersten Rollout passiert).
+  muenevver-app:
     image: ${IMAGE_NAME}:latest
     container_name: muenevver-app
     restart: unless-stopped

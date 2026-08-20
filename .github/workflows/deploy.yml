@@ -68,7 +68,7 @@ jobs:
             echo "Warte auf MySQL und wende Migrationen an..."
             success=0
             for i in $(seq 1 20); do
-              if docker compose -f docker-compose.prod.yml run --rm --no-deps app npm run db:migrate; then
+              if docker compose -f docker-compose.prod.yml run --rm --no-deps muenevver-app npm run db:migrate; then
                 success=1
                 break
               fi
