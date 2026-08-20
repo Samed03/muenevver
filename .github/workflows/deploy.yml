@@ -63,6 +63,9 @@ jobs:
             set -e
             cd /opt/muenevver
             docker compose -f docker-compose.prod.yml pull
+            # Einmaliger Aufraeumschritt nach der Umbenennung des Compose-Service (app -> muenevver-app):
+            # der alte Container blockiert sonst per fixem container_name den Namen "muenevver-app".
+            docker rm -f muenevver-app 2>/dev/null || true
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
             echo "Warte auf MySQL und wende Migrationen an..."
