@@ -5,9 +5,10 @@ export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const body = await readBody<{
-    flagEmoji?: string
+    code?: string
     label?: string
     photoPath?: string
+    description?: string
     isDream?: boolean
     sortOrder?: number
   }>(event)
@@ -18,9 +19,10 @@ export default defineEventHandler(async (event) => {
   }
 
   const [result] = await useDb().insert(travelDestinations).values({
-    flagEmoji: body.flagEmoji?.trim() ?? '',
+    code: body.code?.trim().toUpperCase() ?? '',
     label,
     photoPath: body.photoPath ?? null,
+    description: body.description?.trim() ?? null,
     isDream: body.isDream === true,
     sortOrder: Number.isInteger(body.sortOrder) ? body.sortOrder! : 0
   })

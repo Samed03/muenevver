@@ -86,4 +86,7 @@ jobs:
             echo "Uebernehme Basisinhalte (Profil/Hobbies/Reiseziele), falls noch leer..."
             docker compose -f docker-compose.prod.yml run --rm --no-deps muenevver-app npm run db:seed
 
+            echo "Uebernimmt alte Emoji-Werte (Icons/Flaggen) in die neuen Broadsheet-Felder, falls noch nicht migriert..."
+            docker compose -f docker-compose.prod.yml run --rm --no-deps muenevver-app npm run db:backfill
+
             docker image prune -f

@@ -33,6 +33,9 @@ npm run db:migrate
 Write-Host "Uebernehme Basisinhalte (Profil/Hobbies/Reiseziele), falls noch leer..." -ForegroundColor Cyan
 npm run db:seed
 
+Write-Host "Uebernimmt alte Emoji-Werte (Icons/Flaggen) in die neuen Broadsheet-Felder, falls noch nicht migriert..." -ForegroundColor Cyan
+npm run db:backfill
+
 Write-Host "Starte Nuxt Dev-Server (http://localhost:3000)..." -ForegroundColor Cyan
 Write-Host "Ersten Account einrichten unter http://localhost:3000/setup" -ForegroundColor Cyan
 Write-Host "Adminer (DB-GUI) laeuft unter http://localhost:8081" -ForegroundColor Cyan
